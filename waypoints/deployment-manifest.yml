@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: waypoints
-          image: benjaminhck/waypoints:7761bddd
+          image: benjaminhck/waypoints:0866cb9f
           imagePullPolicy: Always
           ports:
             - containerPort: 80
