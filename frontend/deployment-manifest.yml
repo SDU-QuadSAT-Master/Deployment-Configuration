@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: benjaminhck/frontend:76fe3ec7
+          image: benjaminhck/frontend:b6e42f73
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
