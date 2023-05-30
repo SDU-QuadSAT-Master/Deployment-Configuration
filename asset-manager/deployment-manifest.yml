@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: asset-manager
-          image: benjaminhck/asset-manager:9444e6e1
+          image: benjaminhck/asset-manager:3d8614a6
           imagePullPolicy: Always
           ports:
             - containerPort: 80
