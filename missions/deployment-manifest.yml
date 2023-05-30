@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: missions
+  labels:
+    app: missions
+spec:
+  selector:
+    matchLabels:
+      app: missions
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: missions
+    spec:
+      containers:
+        - name: missions
+          image: benjaminhck/missions:11209060
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: missions
+          env:
+            - name: RABBIT_HOST
+              value: 'rabbitmq-0.rabbitmq.rabbits.svc.cluster.local'
+            - name: RABBIT_PORT
+              value: '5672'
+            - name: RABBIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_USERNAME
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_PASSWORD
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'

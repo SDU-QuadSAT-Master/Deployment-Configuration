@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: waypoints
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      name: waypoints
+  selector:
+    app: waypoints

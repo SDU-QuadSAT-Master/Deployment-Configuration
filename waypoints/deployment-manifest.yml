@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waypoints
+  labels:
+    app: waypoints
+spec:
+  selector:
+    matchLabels:
+      app: waypoints
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: waypoints
+    spec:
+      containers:
+        - name: waypoints
+          image: benjaminhck/waypoints:7761bddd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: waypoints
+          env:
+            - name: RABBIT_HOST
+              value: 'rabbitmq-0.rabbitmq.rabbits.svc.cluster.local'
+            - name: RABBIT_PORT
+              value: '5672'
+            - name: RABBIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_USERNAME
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_PASSWORD
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+            requests:
+              memory: 256Mi
+              cpu: '0.2'

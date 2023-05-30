@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asset-manager
+  labels:
+    app: asset-manager
+spec:
+  selector:
+    matchLabels:
+      app: asset-manager
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: asset-manager
+    spec:
+      containers:
+        - name: asset-manager
+          image: benjaminhck/asset-manager:9444e6e1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              name: asset-manager
+          env:
+            - name: RABBIT_HOST
+              value: 'rabbitmq-0.rabbitmq.rabbits.svc.cluster.local'
+            - name: RABBIT_PORT
+              value: '5672'
+            - name: RABBIT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_USERNAME
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-publisher
+                  key: RABBIT_PASSWORD
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
