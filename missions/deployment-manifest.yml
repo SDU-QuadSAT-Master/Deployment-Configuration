@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: missions
-          image: benjaminhck/missions:11209060
+          image: benjaminhck/missions:4ee1cd79
           imagePullPolicy: Always
           ports:
             - containerPort: 80
